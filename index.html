@@ -11,10 +11,10 @@
             box-sizing: border-box;
         }
 
-        body {
+body {
             font-family: "Microsoft YaHei", "SimSun", "KaiTi", serif;
-            background-color: #1a1a2e;
-            color: #e8e8e8;
+            background-color: #d4b896;
+            color: #5a4a3a;
             line-height: 1.6;
         }
 
@@ -25,22 +25,16 @@
             left: 0;
             right: 0;
             height: 60px;
-            background: linear-gradient(180deg, rgba(20, 20, 40, 0.95) 0%, rgba(20, 20, 40, 0.8) 100%);
+            background: linear-gradient(180deg, rgba(212, 184, 150, 0.95) 0%, rgba(200, 170, 135, 0.9) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            border-bottom: 1px solid rgba(183, 134, 46, 0.3);
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 40px;
-            list-style: none;
+            border-bottom: 1px solid rgba(139, 90, 43, 0.4);
         }
 
         .nav-menu li a {
-            color: #d4af37;
+            color: #5a4a3a;
             text-decoration: none;
             font-size: 16px;
             font-weight: 500;
@@ -56,7 +50,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #b7862e;
+            background: #8b5a2b;
             transition: width 0.3s ease;
         }
 
@@ -65,68 +59,107 @@
         }
 
         .nav-menu li a:hover {
-            color: #f0d78c;
+            color: #3a2a1a;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(180deg, rgba(45, 36, 32, 0.95) 0%, rgba(35, 28, 24, 0.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(139, 90, 43, 0.4);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-menu li a {
+            color: #c4a882;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #8b5a2b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu li a:hover {
+            color: #e8d4b8;
         }
 
         /* 首屏大图区 */
         .hero {
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(15, 15, 26, 0.7) 0%, rgba(26, 26, 46, 0.7) 50%, rgba(22, 33, 62, 0.7) 100%),
-                        url('背景1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             position: relative;
+            width: 100%;
+            height: 100vh;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        .hero-video {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(ellipse at 20% 80%, rgba(183, 134, 46, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
-            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
-        /* 装饰性纹理 */
-        .hero::after {
-            content: '';
+        .hero-content {
             position: absolute;
-            top: 0;
+            bottom: 10%;
             left: 0;
             right: 0;
-            bottom: 0;
-            background-image: 
-                repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(183, 134, 46, 0.03) 100px, rgba(183, 134, 46, 0.03) 101px),
-                repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(183, 134, 46, 0.03) 100px, rgba(183, 134, 46, 0.03) 101px);
-            pointer-events: none;
+            text-align: center;
+            z-index: 10;
         }
 
         .hero h1 {
             font-size: 56px;
-            color: #d4af37;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 4px 8px rgba(0, 0, 0, 0.5);
+            font-family: "SimSun", "FangSong", "Songti", serif;
+            color: #ffffff;
+            text-shadow:
+                2px 2px 0 #6b4423,
+                -2px -2px 0 #6b4423,
+                2px -2px 0 #6b4423,
+                -2px 2px 0 #6b4423,
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.5);
             letter-spacing: 12px;
             margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
         }
 
         .hero .subtitle {
             font-size: 20px;
-            color: #a8906a;
+            font-family: "SimSun", "FangSong", "Songti", serif;
+            color: #ffffff;
             letter-spacing: 8px;
-            position: relative;
-            z-index: 1;
+            opacity: 0.9;
         }
 
         .scroll-indicator {
@@ -137,21 +170,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #d4af37;
+            color: #ffffff;
             animation: bounce 2s infinite;
+            z-index: 10;
         }
 
         .scroll-indicator span {
             font-size: 12px;
             letter-spacing: 2px;
             margin-bottom: 10px;
-        }
-
-        .scroll-indicator::after {
-            content: '';
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, #d4af37, transparent);
         }
 
         @keyframes bounce {
@@ -163,13 +190,13 @@
         /* 3D模型展示区 */
         .model-section {
             padding: 80px 20px;
-            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+            background: linear-gradient(180deg, #d4b896 0%, #c4a876 100%);
             text-align: center;
         }
 
         .section-title {
             font-size: 36px;
-            color: #d4af37;
+            color: #5a4a3a;
             margin-bottom: 40px;
             letter-spacing: 8px;
             position: relative;
@@ -182,7 +209,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            color: #8b4513;
+            color: #8b5a2b;
             font-size: 14px;
         }
 
@@ -199,8 +226,8 @@
             max-width: 900px;
             height: 500px;
             margin: 0 auto;
-            background: linear-gradient(135deg, #0a0a15 0%, #1a1a2e 100%);
-            border: 2px solid rgba(183, 134, 46, 0.3);
+            background: linear-gradient(135deg, #e4d4b6 0%, #d4b896 100%);
+            border: 2px solid rgba(139, 90, 43, 0.3);
             border-radius: 8px;
             overflow: hidden;
             position: relative;
@@ -208,14 +235,14 @@
 
         .model-controls {
             margin-top: 20px;
-            color: #a8906a;
+            color: #6a5a4a;
             font-size: 14px;
         }
 
         /* 图文介绍区 */
         .intro-section {
             padding: 80px 20px;
-            background: #0f0f1a;
+            background: #c4a876;
         }
 
         .intro-container {
@@ -228,14 +255,14 @@
         }
 
         .intro-image {
-            background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4e 100%);
-            border: 2px solid rgba(183, 134, 46, 0.3);
+            background: linear-gradient(135deg, #e4d4b6 0%, #d4c4a6 100%);
+            border: 2px solid rgba(139, 90, 43, 0.3);
             border-radius: 8px;
             height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6a6a8a;
+            color: #7a6a5a;
             font-size: 16px;
             position: relative;
             overflow: hidden;
@@ -244,32 +271,32 @@
         .intro-image::before {
             content: '🏯';
             font-size: 80px;
-            opacity: 0.3;
+            opacity: 0.4;
         }
 
         .intro-text h3 {
             font-size: 28px;
-            color: #d4af37;
+            color: #5a4a3a;
             margin-bottom: 20px;
             letter-spacing: 4px;
         }
 
         .intro-text p {
-            color: #b8b8c8;
+            color: #6a5a4a;
             margin-bottom: 15px;
             font-size: 16px;
             line-height: 1.8;
         }
 
         .intro-text .highlight {
-            color: #d4af37;
+            color: #6a5a4a;
             font-weight: 600;
         }
 
         /* 卡片展示区 */
         .cards-section {
             padding: 80px 20px;
-            background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+            background: linear-gradient(180deg, #c4a876 0%, #d4b896 100%);
         }
 
         .cards-container {
@@ -281,8 +308,8 @@
         }
 
         .card {
-            background: linear-gradient(145deg, #1e1e38 0%, #15152a 100%);
-            border: 1px solid rgba(183, 134, 46, 0.2);
+            background: linear-gradient(145deg, #e4d4b6 0%, #d4c4a6 100%);
+            border: 1px solid rgba(139, 90, 43, 0.2);
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.4s ease;
@@ -291,17 +318,17 @@
 
         .card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(183, 134, 46, 0.1);
-            border-color: rgba(183, 134, 46, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(139, 90, 43, 0.1);
+            border-color: rgba(139, 90, 43, 0.5);
         }
 
         .card-image {
             height: 180px;
-            background: linear-gradient(135deg, #2a2a4a 0%, #1a1a3a 100%);
+            background: linear-gradient(135deg, #d4c4a6 0%, #c4b496 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6a6a8a;
+            color: #7a6a5a;
             font-size: 50px;
             position: relative;
         }
@@ -313,7 +340,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #8b4513, #d4af37, #8b4513);
+            background: linear-gradient(90deg, #8b5a2b, #6a5a4a, #8b5a2b);
         }
 
         .card-content {
@@ -322,13 +349,13 @@
 
         .card-content h4 {
             font-size: 20px;
-            color: #d4af37;
+            color: #5a4a3a;
             margin-bottom: 12px;
             letter-spacing: 2px;
         }
 
         .card-content p {
-            color: #9898b0;
+            color: #6a5a4a;
             font-size: 14px;
             line-height: 1.7;
         }
@@ -336,26 +363,26 @@
         /* 页脚 */
         .footer {
             padding: 40px 20px;
-            background: #0a0a15;
+            background: #c4a876;
             text-align: center;
-            border-top: 1px solid rgba(183, 134, 46, 0.2);
+            border-top: 1px solid rgba(139, 90, 43, 0.2);
         }
 
         .footer p {
-            color: #6a6a8a;
+            color: #6a5a4a;
             font-size: 14px;
             margin-bottom: 10px;
         }
 
         .footer .copyright {
-            color: #4a4a6a;
+            color: #5a4a3a;
             font-size: 12px;
         }
 
         .footer-decoration {
             width: 60px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            background: linear-gradient(90deg, transparent, #5a4a3a, transparent);
             margin: 20px auto;
         }
 
@@ -411,8 +438,13 @@
 
     <!-- 首屏大图区 -->
     <section class="hero">
-        <h1>中国古建筑数字展厅</h1>
-        <p class="subtitle">探索千年建筑智慧 传承中华文化精髓</p>
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="视频1.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>中国古建筑数字展厅</h1>
+            <p class="subtitle">探索千年建筑智慧 传承中华文化精髓</p>
+        </div>
         <div class="scroll-indicator">
             <span>向下滚动</span>
         </div>
@@ -505,7 +537,7 @@
 
             // 创建场景
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x0a0a15);
+            scene.background = new THREE.Color(0xe4d4b6);
 
             // 创建相机
             camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
@@ -528,7 +560,7 @@
             scene.add(directionalLight);
 
             // 添加点光源
-            const pointLight = new THREE.PointLight(0xd4af37, 0.5);
+            const pointLight = new THREE.PointLight(0xc4a882, 0.5);
             pointLight.position.set(-5, 5, 5);
             scene.add(pointLight);
 
@@ -540,20 +572,17 @@
             controls.maxDistance = 10;
             controls.enablePan = true;
 
-            // 加载GLTF模型（使用Three.js官方测试模型）
+            // 加载GLTF模型
             const loader = new THREE.GLTFLoader();
-            
-            // 显示加载提示
-            container.innerHTML = '<div style="color:#d4af37;padding:50px;text-align:center;">正在加载3D模型...</div>';
-            
+
+            container.innerHTML = '<div style="color:#c4a882;padding:50px;text-align:center;">正在加载3D模型...</div>';
+
             loader.load(
                 'https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf',
                 function(gltf) {
                     model = gltf.scene;
                     model.scale.set(1.5, 1.5, 1.5);
                     scene.add(model);
-                    
-                    // 恢复容器
                     container.innerHTML = '';
                     container.appendChild(renderer.domElement);
                 },
@@ -562,7 +591,7 @@
                 },
                 function(error) {
                     console.error('模型加载失败:', error);
-                    container.innerHTML = '<div style="color:#a8906a;padding:50px;text-align:center;">3D模型加载失败<br>请检查网络连接</div>';
+                    container.innerHTML = '<div style="color:#a08060;padding:50px;text-align:center;">3D模型加载失败<br>请检查网络连接</div>';
                 }
             );
 
@@ -586,7 +615,6 @@
 
         // 页面加载完成后初始化3D
         window.addEventListener('load', function() {
-            // 延迟初始化，确保DOM完全就绪
             setTimeout(init3D, 100);
         });
     </script>
