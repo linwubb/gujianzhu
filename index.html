@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国古建筑数字展厅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+body {
+            font-family: "Microsoft YaHei", "SimSun", "KaiTi", serif;
+            background-color: #d4b896;
+            color: #5a4a3a;
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(180deg, rgba(212, 184, 150, 0.95) 0%, rgba(200, 170, 135, 0.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(139, 90, 43, 0.4);
+        }
+
+        .nav-menu li a {
+            color: #5a4a3a;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #8b5a2b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu li a:hover {
+            color: #3a2a1a;
+        }
+
+        .nav-menu li a.active::after {
+            width: 100%;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(180deg, rgba(45, 36, 32, 0.95) 0%, rgba(35, 28, 24, 0.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(139, 90, 43, 0.4);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-menu li a {
+            color: #c4a882;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #8b5a2b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu li a:hover {
+            color: #e8d4b8;
+        }
+
+        /* 首屏大图区 */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-family: "SimSun", "FangSong", "Songti", serif;
+            color: #ffffff;
+            text-shadow:
+                3px 3px 0 #6b4423,
+                -3px -3px 0 #6b4423,
+                3px -3px 0 #6b4423,
+                -3px 3px 0 #6b4423,
+                1px 1px 0 #5a3a1a,
+                -1px -1px 0 #5a3a1a,
+                1px -1px 0 #5a3a1a,
+                -1px 1px 0 #5a3a1a,
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.5);
+            letter-spacing: 12px;
+            margin-bottom: 20px;
+        }
+
+        .hero .subtitle {
+            font-size: 20px;
+            font-family: "SimSun", "FangSong", "Songti", serif;
+            color: #ffffff;
+            letter-spacing: 8px;
+            opacity: 0.9;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ffffff;
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        .scroll-indicator span {
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* 3D模型展示区 */
+        .model-section {
+            padding: 80px 20px;
+            background: linear-gradient(180deg, #d4b896 0%, #c4a876 100%);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: #5a4a3a;
+            margin-bottom: 40px;
+            letter-spacing: 8px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8b5a2b;
+            font-size: 14px;
+        }
+
+        .section-title::before {
+            left: -40px;
+        }
+
+        .section-title::after {
+            right: -40px;
+        }
+
+        #3d-container {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #e4d4b6 0%, #d4b896 100%);
+            border: 2px solid rgba(139, 90, 43, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .model-controls {
+            margin-top: 20px;
+            color: #6a5a4a;
+            font-size: 14px;
+        }
+
+        /* 图文介绍区 */
+        .intro-section {
+            padding: 80px 20px;
+            background: #c4a876;
+        }
+
+        .intro-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .intro-image {
+            background: linear-gradient(135deg, #e4d4b6 0%, #d4c4a6 100%);
+            border: 2px solid rgba(139, 90, 43, 0.3);
+            border-radius: 8px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7a6a5a;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-image::before {
+            content: '🏯';
+            font-size: 80px;
+            opacity: 0.4;
+        }
+
+        .intro-text h3 {
+            font-size: 28px;
+            color: #5a4a3a;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+
+        .intro-text p {
+            color: #6a5a4a;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .intro-text .highlight {
+            color: #6a5a4a;
+            font-weight: 600;
+        }
+
+        /* 卡片展示区 */
+        .cards-section {
+            padding: 80px 20px;
+            background: linear-gradient(180deg, #c4a876 0%, #d4b896 100%);
+        }
+
+        .cards-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #e4d4b6 0%, #d4c4a6 100%);
+            border: 1px solid rgba(139, 90, 43, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(139, 90, 43, 0.1);
+            border-color: rgba(139, 90, 43, 0.5);
+        }
+
+        .card-link {
+            text-decoration: none;
+            display: block;
+        }
+
+        .card-image {
+            height: 180px;
+            background: linear-gradient(135deg, #d4c4a6 0%, #c4b496 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7a6a5a;
+            font-size: 50px;
+            position: relative;
+        }
+
+        .card-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8b5a2b, #6a5a4a, #8b5a2b);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-content h4 {
+            font-size: 20px;
+            color: #5a4a3a;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .card-content p {
+            color: #6a5a4a;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* 页脚 */
+        .footer {
+            padding: 40px 20px;
+            background: #c4a876;
+            text-align: center;
+            border-top: 1px solid rgba(139, 90, 43, 0.2);
+        }
+
+        .footer p {
+            color: #6a5a4a;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer .copyright {
+            color: #5a4a3a;
+            font-size: 12px;
+        }
+
+        .footer-decoration {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #5a4a3a, transparent);
+            margin: 20px auto;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+                letter-spacing: 6px;
+            }
+
+            .hero .subtitle {
+                font-size: 14px;
+                letter-spacing: 4px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+            }
+
+            .nav-menu li a {
+                font-size: 14px;
+            }
+
+            .intro-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .intro-image {
+                height: 250px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            #3d-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <ul class="nav-menu">
+            <li><a href="#" class="nav-item" data-target="hero">首页</a></li>
+            <li><a href="#" class="nav-item" data-target="content-section">概览和意义</a></li>
+            <li><a href="#" class="nav-item" data-target="modules-section">探索与挑战</a></li>
+            <li><a href="#" class="nav-item" data-target="quiz-section">关于</a></li>
+        </ul>
+    </nav>
+
+    <!-- 首屏大图区 -->
+    <section class="hero" id="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="视频1.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>中国古建筑数字展厅</h1>
+            <p class="subtitle">探索千年建筑智慧 传承中华文化精髓</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>向下滚动</span>
+        </div>
+    </section>
+
+    <!-- 核心内容 -->
+    <section class="content-section" id="content-section" style="padding: 80px 20px; background: #d4b896;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="font-size: 32px; color: #5a4a3a; text-align: center; margin-bottom: 30px; letter-spacing: 4px;">概览</h2>
+            <div style="background: linear-gradient(135deg, #e4d4b6 0%, #d4c4a6 100%); border: 1px solid rgba(139, 90, 43, 0.3); border-radius: 12px; padding: 40px;">
+                <p style="font-size: 18px; color: #5a4a3a; line-height: 1.8; margin-bottom: 20px; text-indent: 2em;">
+                    本网站聚焦1911年以前中国古代建筑的卓越成就，以<span style="color: #8b5a2b; font-weight: 600;">民居、官府、皇宫、桥梁</span>四大类型为核心，从<span style="color: #8b5a2b; font-weight: 600;">科学、人物、著作、文化</span>四个维度，系统展示中华优秀传统文化中的建筑智慧。
+                </p>
+                <p style="font-size: 16px; color: #6a5a4a; line-height: 1.8;">
+                    <strong style="color: #8b5a2b;">说明：</strong>本站内容不涉及庙宇、宝塔，专注上述四类建筑。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 讲述网站定义及作用 -->
+    <section class="purpose-section" id="purpose-section" style="padding: 80px 20px; background: #d4b896;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="font-size: 32px; color: #5a4a3a; text-align: center; margin-bottom: 40px; letter-spacing: 4px;">教育意义与宣传价值</h2>
+            
+            <div style="background: linear-gradient(135deg, #e4d4b6 0%, #d4c4a6 100%); border-radius: 10px; padding: 30px;">
+                <p style="font-size: 16px; color: #6a5a4a; line-height: 1.8; margin-bottom: 15px;">
+                    <strong style="color: #5a4a3a;">弘扬中华优秀自然科学成就：</strong>中国古代建筑在结构力学、材料运用、环境适应等方面达到了同时期世界领先水平。本网站旨在揭示古建筑背后的科学原理，传承先民尊重自然、巧借天工的技术智慧。
+                </p>
+                <p style="font-size: 16px; color: #6a5a4a; line-height: 1.8; margin-bottom: 15px;">
+                    <strong style="color: #5a4a3a;">弘扬中华优秀古建筑科学家精神：</strong>从《营造法式》的作者李诫，到主持修建赵州桥的李春，一代代建筑科学家以精益求精的工匠精神，创造了无数建筑奇迹。本网站将讲述他们的故事，弘扬严谨求实、勇于创新的科学家精神。
+                </p>
+                <p style="font-size: 16px; color: #6a5a4a; line-height: 1.8; margin-bottom: 15px;">
+                    <strong style="color: #5a4a3a;">弘扬中华优秀古建筑学专著：</strong>《营造法式》《园冶》《工程做法》等古代建筑典籍，是中华科技史的重要组成部分。本网站将介绍这些珍贵文献，展现中国古代建筑理论的系统性与先进性。
+                </p>
+                <p style="font-size: 16px; color: #6a5a4a; line-height: 1.8;">
+                    <strong style="color: #5a4a3a;">弘扬中华优秀古建筑文明和文化传承：</strong>建筑是凝固的历史。民居承载着百姓生活，官府体现着礼制秩序，皇宫彰显着国家气象，桥梁连通着山河人文。本网站旨在让公众了解古建筑背后的文化内涵，推动中华优秀建筑文明的保护与传承。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 三个跳转模块 -->
+    <section class="modules-section" id="modules-section" style="padding: 80px 20px; background: #d4b896;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <span style="font-size: 28px; color: #ffffff; letter-spacing: 4px; text-shadow: 1px 1px 0 #5a3a1a, -1px -1px 0 #5a3a1a, 1px -1px 0 #5a3a1a, -1px 1px 0 #5a3a1a;">进入探索吧！</span>
+                <span style="font-size: 24px; margin-left: 10px; color: #ffffff;">↓</span>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <a href="chengjiu.html" style="text-decoration: none; flex: 1; min-width: 280px; max-width: 350px;">
+                    <div style="background: linear-gradient(145deg, #e4d4b6 0%, #d4c4a6 100%); border: 1px solid rgba(139, 90, 43, 0.3); border-radius: 12px; padding: 40px 30px; text-align: center; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='linear-gradient(145deg, #d4c4a6 0%, #c4b496 100%)';this.style.boxShadow='0 10px 30px rgba(139, 90, 43, 0.3)';this.style.transform='translateY(-5px)';" onmouseout="this.style.background='linear-gradient(145deg, #e4d4b6 0%, #d4c4a6 100%)';this.style.boxShadow='none';this.style.transform='translateY(0)';">
+                        <div style="font-size: 50px; margin-bottom: 20px;">🏛️</div>
+                        <h3 style="font-size: 22px; color: #5a4a3a; margin-bottom: 15px; letter-spacing: 2px;">建筑成就</h3>
+                        <p style="font-size: 14px; color: #6a5a4a; line-height: 1.6;">探索古代建筑的科学原理与技术智慧</p>
+                    </div>
+                </a>
+                <a href="#" style="text-decoration: none; flex: 1; min-width: 280px; max-width: 350px;">
+                    <div style="background: linear-gradient(145deg, #e4d4b6 0%, #d4c4a6 100%); border: 1px solid rgba(139, 90, 43, 0.3); border-radius: 12px; padding: 40px 30px; text-align: center; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='linear-gradient(145deg, #d4c4a6 0%, #c4b496 100%)';this.style.boxShadow='0 10px 30px rgba(139, 90, 43, 0.3)';this.style.transform='translateY(-5px)';" onmouseout="this.style.background='linear-gradient(145deg, #e4d4b6 0%, #d4c4a6 100%)';this.style.boxShadow='none';this.style.transform='translateY(0)';">
+                        <div style="font-size: 50px; margin-bottom: 20px;">👨‍🔬</div>
+                        <h3 style="font-size: 22px; color: #5a4a3a; margin-bottom: 15px; letter-spacing: 2px;">杰出建筑科学家</h3>
+                        <p style="font-size: 14px; color: #6a5a4a; line-height: 1.6;">了解古代建筑家的传奇故事</p>
+                    </div>
+                </a>
+                <a href="part1.html" style="text-decoration: none; flex: 1; min-width: 280px; max-width: 350px;">
+                    <div style="background: linear-gradient(145deg, #e4d4b6 0%, #d4c4a6 100%); border: 1px solid rgba(139, 90, 43, 0.3); border-radius: 12px; padding: 40px 30px; text-align: center; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='linear-gradient(145deg, #d4c4a6 0%, #c4b496 100%)';this.style.boxShadow='0 10px 30px rgba(139, 90, 43, 0.3)';this.style.transform='translateY(-5px)';" onmouseout="this.style.background='linear-gradient(145deg, #e4d4b6 0%, #d4c4a6 100%)';this.style.boxShadow='none';this.style.transform='translateY(0)';">
+                        <div style="font-size: 50px; margin-bottom: 20px;">📚</div>
+                        <h3 style="font-size: 22px; color: #5a4a3a; margin-bottom: 15px; letter-spacing: 2px;">建筑著作</h3>
+                        <p style="font-size: 14px; color: #6a5a4a; line-height: 1.6;">研读古代建筑经典专著</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 答题版块 -->
+    <section class="quiz-section" id="quiz-section" style="padding: 80px 20px; background: #d4b896;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 style="font-size: 32px; color: #5a4a3a; margin-bottom: 40px; letter-spacing: 4px;">若阅读完意犹未尽，不妨小试牛刀？</h2>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <div style="flex: 0 0 120px;">
+                    <img src="挑战图.jpg" alt="挑战" style="width: 100px; height: auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                </div>
+                <div style="flex: 0 0 auto;">
+                    <a href="#" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%); color: #fff; text-decoration: none; font-size: 20px; font-weight: 600; border-radius: 8px; letter-spacing: 2px; transition: all 0.3s ease;">
+                        点击挑战
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>中国古建筑数字展厅</p>
+        <div class="footer-decoration"></div>
+        <p class="copyright">© 2026 古建筑专题 · 仅供学习交流使用</p>
+    </footer>
+
+    <!-- Three.js 3D模型 -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+        // 3D场景初始化
+        let scene, camera, renderer, controls;
+        let model = null;
+
+        function init3D() {
+            const container = document.getElementById('3d-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // 创建场景
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xe4d4b6);
+
+            // 创建相机
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 0, 5);
+
+            // 创建渲染器
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            // 添加环境光
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            // 添加方向光
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            // 添加点光源
+            const pointLight = new THREE.PointLight(0xc4a882, 0.5);
+            pointLight.position.set(-5, 5, 5);
+            scene.add(pointLight);
+
+            // 添加轨道控制器
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.minDistance = 2;
+            controls.maxDistance = 10;
+            controls.enablePan = true;
+
+            // 加载GLTF模型
+            const loader = new THREE.GLTFLoader();
+
+            container.innerHTML = '<div style="color:#c4a882;padding:50px;text-align:center;">正在加载3D模型...</div>';
+
+            loader.load(
+                'https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf',
+                function(gltf) {
+                    model = gltf.scene;
+                    model.scale.set(1.5, 1.5, 1.5);
+                    scene.add(model);
+                    container.innerHTML = '';
+                    container.appendChild(renderer.domElement);
+                },
+                function(xhr) {
+                    console.log('加载进度: ' + (xhr.loaded / xhr.total * 100) + '%');
+                },
+                function(error) {
+                    console.error('模型加载失败:', error);
+                    container.innerHTML = '<div style="color:#a08060;padding:50px;text-align:center;">3D模型加载失败<br>请检查网络连接</div>';
+                }
+            );
+
+            // 动画循环
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // 窗口大小调整
+            window.addEventListener('resize', function() {
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight;
+                camera.aspect = newWidth / newHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(newWidth, newHeight);
+            });
+        }
+
+        // 页面加载完成后初始化3D
+        window.addEventListener('load', function() {
+            setTimeout(init3D, 100);
+        });
+
+        // 导航滚动高亮
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        function updateNav() {
+            const scrollPos = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            // 定义各区域对应的导航项和数据目标
+            const navMap = [
+                { id: 'hero', target: 'hero', threshold: windowHeight * 0.5 },
+                { id: 'content-section', target: 'content-section', threshold: 100 },
+                { id: 'purpose-section', target: 'purpose-section', threshold: 100 },
+                { id: 'modules-section', target: 'modules-section', threshold: 100 },
+                { id: 'quiz-section', target: 'quiz-section', threshold: 100 }
+            ];
+            
+            let currentActive = null;
+            
+            // 从后往前检查，确保最后一个在视口中的区域被激活
+            for (let i = navMap.length - 1; i >= 0; i--) {
+                const section = document.getElementById(navMap[i].id);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    const threshold = navMap[i].threshold;
+                    
+                    // 检查区域是否在视口中可见
+                    if (rect.top <= threshold && rect.bottom > threshold) {
+                        currentActive = navMap[i].target;
+                        break;
+                    }
+                }
+            }
+            
+            // 如果没有找到当前区域，使用备用逻辑
+            if (!currentActive) {
+                for (let i = navMap.length - 1; i >= 0; i--) {
+                    const section = document.getElementById(navMap[i].id);
+                    if (section && section.offsetTop <= scrollPos + windowHeight * 0.3) {
+                        currentActive = navMap[i].target;
+                        break;
+                    }
+                }
+            }
+            
+            // 更新导航项状态
+            navItems.forEach(item => {
+                if (item.getAttribute('data-target') === currentActive) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateNav, { passive: true });
+        window.addEventListener('resize', updateNav, { passive: true });
+        updateNav();
+    </script>
+</body>
+</html>
