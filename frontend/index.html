@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古建筑文化交流社区</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">&#x1F3EF;</span>
+                <span class="logo-text">古建筑文化交流社区</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#posts">帖子</a></li>
+                <li><a href="#about">关于</a></li>
+            </ul>
+            <div class="user-section" id="userSection">
+                <button class="btn-login" onclick="showLoginModal()">登录</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页横幅 -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>探索中华古建筑之美</h1>
+            <p class="hero-subtitle">传承千年文化，分享古建知识，交流修复技艺</p>
+            <button class="btn-primary btn-large" onclick="scrollToPosts()">进入社区</button>
+        </div>
+        <div class="hero-pattern"></div>
+    </section>
+
+    <!-- 主体内容区 -->
+    <div class="main-container">
+        <!-- 左侧：发布帖子 -->
+        <aside class="sidebar">
+            <div class="card publish-card">
+                <h3 class="card-title">发布帖子</h3>
+                <div id="publishLoginTip" class="login-tip">
+                    <p>请先登录后发布帖子</p>
+                    <button class="btn-primary" onclick="showLoginModal()">立即登录</button>
+                </div>
+                <div id="publishForm" class="publish-form" style="display: none;">
+                    <input type="text" id="postTitle" placeholder="请输入帖子标题（需包含古建筑关键词）">
+                    <textarea id="postContent" placeholder="请输入古建筑相关内容...
+
+支持的关键词：古建筑、斗拱、歇山顶、庑殿顶、园林、寺庙、佛塔、明清古建、民居、牌坊、故宫"></textarea>
+                    <button class="btn-primary" onclick="publishPost()">发布帖子</button>
+                    <div id="publishTip"></div>
+                </div>
+            </div>
+
+            <div class="card info-card">
+                <h3 class="card-title">社区规范</h3>
+                <ul class="rules-list">
+                    <li>仅限古建筑相关内容</li>
+                    <li>标题或内容需含关键词</li>
+                    <li>文明交流，友善互动</li>
+                    <li>禁止发布广告信息</li>
+                </ul>
+            </div>
+
+            <div class="card keywords-card">
+                <h3 class="card-title">热门关键词</h3>
+                <div class="keywords">
+                    <span class="tag">古建筑</span>
+                    <span class="tag">斗拱</span>
+                    <span class="tag">歇山顶</span>
+                    <span class="tag">庑殿顶</span>
+                    <span class="tag">园林</span>
+                    <span class="tag">寺庙</span>
+                    <span class="tag">佛塔</span>
+                    <span class="tag">明清古建</span>
+                    <span class="tag">民居</span>
+                    <span class="tag">牌坊</span>
+                    <span class="tag">故宫</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 右侧：帖子列表 -->
+        <main id="posts" class="content">
+            <div class="section-header">
+                <h2 class="section-title">社区帖子</h2>
+                <div class="filter-tabs">
+                    <button class="tab active">全部</button>
+                    <button class="tab">热门</button>
+                    <button class="tab">最新</button>
+                </div>
+            </div>
+
+            <div id="postList" class="post-list">
+                <!-- 帖子将通过JS动态加载 -->
+                <div class="loading">正在加载帖子...</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 关于区域 -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <h2 class="section-title-center">关于我们</h2>
+            <p class="about-desc">古建筑文化交流社区致力于传承和弘扬中华传统建筑文化，为古建爱好者提供一个专业的交流平台。</p>
+            <div class="features">
+                <div class="feature-item">
+                    <span class="feature-icon">&#x1F3DB;</span>
+                    <h4>知识分享</h4>
+                    <p>分享古建筑历史、结构、修复等专业知识</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">&#x1F4F8;</span>
+                    <h4>作品展示</h4>
+                    <p>展示古建筑摄影、测绘、研究成果</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">&#x1F465;</span>
+                    <h4>交流互动</h4>
+                    <p>与志同道合的朋友交流探讨</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 古建筑文化交流社区 - 传承千年文化</p>
+        </div>
+    </footer>
+
+    <!-- 登录弹窗 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <div class="login-box">
+                <h3>用户登录</h3>
+                <div class="input-group">
+                    <label>用户名</label>
+                    <input type="text" id="username" placeholder="请输入用户名" value="test">
+                </div>
+                <div class="input-group">
+                    <label>密码</label>
+                    <input type="password" id="password" placeholder="请输入密码" value="123456">
+                </div>
+                <button class="btn-primary btn-full" onclick="login()">登录</button>
+                <div id="loginTip"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 评论弹窗 -->
+    <div id="commentModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeCommentModal()">&times;</span>
+            <div class="comment-section">
+                <h3>帖子详情</h3>
+                <div id="commentPostDetail" class="post-detail"></div>
+
+                <div class="comment-form" id="commentForm" style="display: none;">
+                    <h4>发表评论</h4>
+                    <textarea id="commentContent" placeholder="请输入评论内容"></textarea>
+                    <button class="btn-primary" onclick="submitComment()">发表评论</button>
+                </div>
+
+                <div class="comments-list">
+                    <h4>评论列表</h4>
+                    <div id="commentsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
