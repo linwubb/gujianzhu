@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>古建筑交互体验馆</title>
+  <style>
+    *{margin: 0;padding: 0;box-sizing: border-box;font-family: "微软雅黑","宋体",serif;}
+    body{background-color: #f8f3e9;color: #4a3520;line-height: 1.7;}
+    .container{width: 100%;max-width: 1000px;margin: 0 auto;padding: 30px 20px;}
+    .module{margin: 50px 0;padding: 25px;background: rgba(255,253,248,0.9);border: 2px solid #967249;border-radius: 12px;}
+    .module-title{font-size: 22px;color: #5c3f22;margin-bottom: 15px;border-bottom: 1px solid #d4b896;padding-bottom: 8px;}
+
+    /* 返回按钮样式 */
+    .back-btn-container{margin-bottom: 20px;}
+    .back-btn{
+      display: inline-flex;align-items: center;gap: 8px;
+      padding: 10px 25px;background: linear-gradient(135deg, #8b6942 0%, #6d4c30 100%);
+      color: white;text-decoration: none;border-radius: 25px;
+      font-size: 15px;font-weight: 600;cursor: pointer;
+      transition: all 0.3s ease;box-shadow: 0 4px 12px rgba(139,105,66,0.3);
+      border: none;
+    }
+    .back-btn:hover{transform: translateY(-2px);box-shadow: 0 6px 16px rgba(139,105,66,0.4);}
+
+    /* ========== 模块1：图片点击热区科普 ========== */
+    .img-box{position: relative;width: 100%;max-width: 900px;margin: 0 auto;padding: 0 15px;}
+    .garden-img{width: 100%;display: block;border-radius: 6px;}
+    .info-btn{
+      position: absolute;padding: 6px 12px;background: rgba(255,255,255,0.95);
+      border: 2px solid #8b6942;border-radius: 20px;color: #5c3f22;
+      font-size: 13px;font-weight: bold;cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);z-index: 10;
+      transition: all 0.3s;
+    }
+    .info-btn:hover{background: #8b6942;color: #fff;transform: scale(1.05);}
+    .popup{
+      position: absolute;background: rgba(254,250,242,0.98);
+      border: 2px solid #8b6942;border-radius: 8px;padding: 16px;
+      width: 280px;box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      display: none;z-index: 20;left: 100%;top: 0;margin-left: 15px;
+    }
+    .popup h4{color: #553a1f;margin-bottom: 8px;font-size: 15px;border-bottom: 1px solid #d4b896;padding-bottom: 6px;}
+    .popup p{font-size: 13px;color: #333;line-height: 1.6;}
+    .close{margin-top: 10px;padding: 4px 10px;border: none;background: #8b6942;color: #fff;border-radius: 3px;cursor: pointer;font-size: 12px;}
+
+    /* ========== 模块2：路线漫游导览 ========== */
+    .view-box{position: relative;overflow: hidden;border-radius: 6px;border: 2px solid #967249;height: 520px;}
+    .view-img{width: 100%;height: 100%;object-fit: cover;transition: all 1.2s ease;}
+    .point-btn{margin: 12px 5px;padding: 6px 14px;background: #7a583c;color:#fff;border:none;border-radius: 4px;cursor: pointer;}
+    .tip{margin-bottom: 10px;color:#666;font-size:14px;}
+    .spot-label{
+      position: absolute;bottom: 30px;left: 50%;transform: translateX(-50%);
+      background: rgba(139,105,66,0.95);color: #fff;padding: 12px 30px;
+      border-radius: 25px;font-size: 18px;font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);z-index: 10;
+      display: none;animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn{
+      from{opacity: 0;transform: translateX(-50%) translateY(20px);}
+      to{opacity: 1;transform: translateX(-50%) translateY(0);}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- 返回按钮 -->
+  <div class="back-btn-container">
+    <a href="chengjiu.html" class="back-btn">← 返回上一页</a>
+  </div>
+
+  <!-- ==================== 模块1：建筑细节点击科普 ==================== -->
+  <div class="module">
+    <div class="module-title">一、古建构件点击科普</div>
+    <div class="img-box">
+      <!-- HTML与图片同属frontend文件夹，相对路径完全适配 -->
+      <img src="全景图.jpg" alt="中式古建园林全景鸟瞰图" class="garden-img">
+
+      <!-- 图片上的点击按钮 -->
+      <button class="info-btn" style="top: 85%; left: 35%;" onclick="showPopup(this, 'door')">院落正门</button>
+      <button class="info-btn" style="top: 60%; left: 48%;" onclick="showPopup(this, 'moon')">月洞门</button>
+      <button class="info-btn" style="top: 40%; left: 45%;" onclick="showPopup(this, 'water')">叠山理水</button>
+      <button class="info-btn" style="top: 25%; left: 48%;" onclick="showPopup(this, 'hall')">主体厅堂</button>
+      <button class="info-btn" style="top: 55%; left: 20%;" onclick="showPopup(this, 'pavil')">四角凉亭</button>
+      <button class="info-btn" style="top: 20%; left: 22%;" onclick="showPopup(this, 'wall')">徽派马头墙</button>
+      <button class="info-btn" style="top: 45%; left: 70%;" onclick="showPopup(this, 'bridge')">石拱桥</button>
+
+      <!-- 所有弹窗古建筑专业科普文案 -->
+      <div class="popup" id="door">
+        <h4>院落正门</h4>
+        <p>中式古建筑严格遵循中轴线对称布局，正门作为院落开端，划分内外空间，兼具礼仪分界与防卫作用，台阶形制对应传统等级规制。</p >
+        <button class="close" onclick="closeAll()">关闭</button>
+      </div>
+      <div class="popup" id="moon">
+        <h4>月洞门</h4>
+        <p>江南园林经典造景元素，圆月造型寓意圆满吉祥，利用框景手法分隔空间，藏景借景，营造移步换景的古典园林意境。</p >
+        <button class="close" onclick="closeAll()">关闭</button>
+      </div>
+      <div class="popup" id="water">
+        <h4>叠山理水</h4>
+        <p>古典园林核心营造智慧，遵循"虽由人作，宛自天开"，引水造池、堆叠假山，将自然山水微缩于院落，实现人与自然相融。</p >
+        <button class="close" onclick="closeAll()">关闭</button>
+      </div>
+      <div class="popup" id="hall">
+        <h4>抬梁式厅堂</h4>
+        <p>采用传统榫卯抬梁木结构，无铁钉承重，坡屋顶快速排水，飞檐翘角兼顾防风防雨与建筑美学，为院落核心主体建筑。</p >
+        <button class="close" onclick="closeAll()">关闭</button>
+      </div>
+      <div class="popup" id="pavil">
+        <h4>四角攒尖亭</h4>
+        <p>凉亭通透开敞，供游园休憩观景，攒尖屋顶利于快速排水，适配江南多雨气候，是园林重要景观休闲建筑。</p >
+        <button class="close" onclick="closeAll()">关闭</button>
+      </div>
+      <div class="popup" id="wall">
+        <h4>徽派马头墙</h4>
+        <p>白墙黛瓦为江南古建标志，高出屋面的山墙可防火隔火、防风遮阳，层叠造型兼具实用功能与古典审美。</p >
+        <button class="close" onclick="closeAll()">关闭</button>
+      </div>
+      <div class="popup" id="bridge">
+        <h4>园林石拱桥</h4>
+        <p>低平曲桥连通水陆，划分水面空间层次，造型简约雅致，贴合园林整体意境，是古典园林标志性景观构件。</p >
+        <button class="close" onclick="closeAll()">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 模块2：园林路线导览漫游 ==================== -->
+  <div class="module">
+    <div class="module-title">二、园林虚拟路线导览</div>
+    <p class="tip">点击下方按钮，镜头自动移动缩放，游览全园景点</p >
+    <div class="view-box">
+      <img src="全景图.jpg" class="view-img" id="viewImg">
+      <div class="spot-label" id="spotLabel"></div>
+    </div>
+    <div style="margin-top:10px">
+      <button class="point-btn" onclick="go('door')">1.院落正门</button>
+      <button class="point-btn" onclick="go('qian')">2.前庭院落</button>
+      <button class="point-btn" onclick="go('moon')">3.月洞门</button>
+      <button class="point-btn" onclick="go('water')">4.中心水景园林</button>
+      <button class="point-btn" onclick="go('hall')">5.主体厅堂建筑群</button>
+      <button class="point-btn" onclick="resetView()" style="background-color: #967249;">重置视角</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ========== 模块1 弹窗脚本 ==========
+  function showPopup(btn, id){
+    closeAll();
+    const popup = document.getElementById(id);
+    popup.style.display = 'block';
+
+    // 将弹窗定位到按钮旁边
+    const btnRect = btn.getBoundingClientRect();
+    const imgBox = document.querySelector('.img-box');
+    const boxRect = imgBox.getBoundingClientRect();
+
+    // 计算弹窗位置(相对于imgBox)
+    const popupLeft = btnRect.right - boxRect.left + 10;
+    const popupTop = btnRect.top - boxRect.top;
+
+    popup.style.left = popupLeft + 'px';
+    popup.style.top = popupTop + 'px';
+
+    // 如果弹窗超出右边界,显示在按钮左侧（考虑padding）
+    const contentWidth = boxRect.width - 30; // 减去左右padding
+    if(popupLeft + 300 > contentWidth){
+      popup.style.left = (btnRect.left - boxRect.left - 295) + 'px';
+    }
+  }
+  function closeAll(){
+    document.querySelectorAll('.popup').forEach(p=>p.style.display='none');
+  }
+
+  // ========== 模块2 路线漫游缩放脚本 ==========
+  const pos = {
+    door:{s:1.8,y:80,label:"院落正门"},
+    qian:{s:2.0,y:40,label:"前庭院落"},
+    moon:{s:2.3,y:0,label:"月洞门"},
+    water:{s:2.5,y:-30,label:"中心水景园林"},
+    hall:{s:2.1,y:-90,label:"主体厅堂建筑群"}
+  };
+  function go(name){
+    let img = document.getElementById('viewImg');
+    let label = document.getElementById('spotLabel');
+
+    img.style.transform = `scale(${pos[name].s}) translateY(${pos[name].y}px)`;
+
+    // 显示景点名称标签
+    label.innerText = pos[name].label;
+    label.style.display = 'block';
+  }
+  function resetView(){
+    let img = document.getElementById('viewImg');
+    let label = document.getElementById('spotLabel');
+
+    img.style.transform = 'scale(1) translateY(0)';
+    label.style.display = 'none';
+  }
+</script>
+</body>
+</html>
